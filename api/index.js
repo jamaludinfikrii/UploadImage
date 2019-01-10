@@ -23,14 +23,37 @@ app.get('/brand' , (req,res) => {
     })
 })
 
-app.post('/addBrand' , (req,res) => {
+app.post('/brand' , (req,res) => {
     var newBrand = {
         nama : req.body.nama   
     }
-    var sql = 'insert into product set ? ;'
+    var sql = 'insert into brand set ? ;'
     db.query(sql,newBrand, (err, result) => {
         if(err) throw err;
+        res.send('Add Sukses')
     })
+})
+
+app.delete('/brand/:id' , (req,res)=>{
+    var id = req.params.id
+    var sql = `DELETE FROM brand WHERE id =${id}`
+    db.query(sql, (err,result) => {
+        if(err) throw err;
+        // console.log(result)
+        res.send('Delete Success')
+    })
+})
+
+app.put('/brand' , (req,res)=> {
+    var id = parseInt(req.body.id);
+    var nama = req.body.nama;
+    var sql = `update brand set nama = '${nama}' where id = ${id}`
+    db.query(sql, (err,result)=>{
+        if(err) throw err
+        console.log(result)
+        console.log('Ini Put yah gaess')
+        res.send('Update Success')
+    })  
 })
 
 
